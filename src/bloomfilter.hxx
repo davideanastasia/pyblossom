@@ -16,4 +16,6 @@ public:
     void add(const char *elem);
 
     bool mightContain(const char *elem);
+
+    BloomFilter merge(const BloomFilter &other) const;
 };

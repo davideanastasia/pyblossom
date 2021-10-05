@@ -17,12 +17,23 @@ def test_ctor():
     bf = BloomFilter(10, 1000)
     assert bf is not None
 
-@pytest.fixture
-def bloomfilter():
+def test_add_one_element():
     bf = BloomFilter(10, 1000)
     bf.add("word1")
-    return bf
 
-def test_add_one_element(bloomfilter):
-    assert bloomfilter.mightContain("word1") is True
-    assert bloomfilter.mightContain("word4") is False
+    assert bf.mightContain("word1") is True
+    assert bf.mightContain("word4") is False
+
+def test_merge():
+    bf1 = BloomFilter(10, 1000)
+    bf1.add("word1")
+
+    bf2 = BloomFilter(10, 1000)
+    bf2.add("word2")
+
+    bf3 = bf1.merge(bf2)
+
+    assert bf3 is not None
+    assert bf3.mightContain("word1") is True
+    assert bf3.mightContain("word2") is True
+    assert bf3.mightContain("word3") is False

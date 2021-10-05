@@ -24,7 +24,8 @@ PYBIND11_MODULE(_cpp, m) {
     py::class_<BloomFilter>(m, "BloomFilter")
         .def(py::init<uint16_t, uint16_t>())
         .def("add", &BloomFilter::add)
-        .def("mightContain", &BloomFilter::mightContain);
+        .def("mightContain", &BloomFilter::mightContain)
+        .def("merge", &BloomFilter::merge);
 
 #ifdef VERSION_INFO
     m.attr("__version__") = MACRO_STRINGIFY(VERSION_INFO);

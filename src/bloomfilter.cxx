@@ -2,6 +2,7 @@
 #include "fnv1a.hxx"
 
 #include <cstdlib>
+#include <assert.h>
 
 BloomFilter::BloomFilter(uint16_t numHashes, uint16_t numBuckets)
 {
@@ -12,7 +13,10 @@ BloomFilter::BloomFilter(uint16_t numHashes, uint16_t numBuckets)
 
 BloomFilter::~BloomFilter()
 {
-    delete[] buckets_;
+    if (buckets_ != NULL)
+    {
+        delete[] buckets_;
+    }
 }
 
 void BloomFilter::add(const char *elem)
@@ -37,4 +41,19 @@ bool BloomFilter::mightContain(const char *elem)
         }
     }
     return true;
+}
+
+BloomFilter BloomFilter::merge(const BloomFilter &other) const
+{
+    assert(this->numBuckets_ == other.numBuckets_);
+    assert(this->numHashes_ == other.numHashes_);
+
+    BloomFilter obj = BloomFilter(other.numHashes_, other.numBuckets_);
+
+    for (int i = 0; i < other.numBuckets_; i++)
+    {
+        obj.buckets_[i] = this->buckets_[i] | other.buckets_[i];
+    }
+
+    return obj;
 }
