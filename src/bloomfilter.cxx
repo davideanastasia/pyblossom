@@ -3,33 +3,36 @@
 
 #include <cstdlib>
 
-BloomFilter::BloomFilter(uint16_t numHashes, uint16_t numBuckets) {
+BloomFilter::BloomFilter(uint16_t numHashes, uint16_t numBuckets)
+{
     numHashes_ = numHashes;
     numBuckets_ = numBuckets;
-    buckets_ = (uint8_t*) malloc(numBuckets * sizeof(uint8_t));
-
-    memset(buckets_, 0, numBuckets * sizeof(uint8_t));
+    buckets_ = new uint8_t[numBuckets];
 }
 
-BloomFilter::~BloomFilter() {
-    if (buckets_ != NULL) {
-        free(buckets_);
-    }
+BloomFilter::~BloomFilter()
+{
+    delete[] buckets_;
 }
 
-void BloomFilter::add(const char* elem) {
-    for (int i = 0; i < numHashes_; i++) {
+void BloomFilter::add(const char *elem)
+{
+    for (int i = 0; i < numHashes_; i++)
+    {
         uint64_t currHash = fnv1a(elem, i);
         uint64_t idx = currHash % numBuckets_;
         buckets_[idx] = 1;
     }
 }
 
-bool BloomFilter::mightContain(const char* elem) {
-    for (int i = 0; i < numHashes_; i++) {
+bool BloomFilter::mightContain(const char *elem)
+{
+    for (int i = 0; i < numHashes_; i++)
+    {
         uint64_t currHash = fnv1a(elem, i);
         uint64_t idx = currHash % numBuckets_;
-        if (buckets_[idx] == 0) {
+        if (buckets_[idx] == 0)
+        {
             return false;
         }
     }

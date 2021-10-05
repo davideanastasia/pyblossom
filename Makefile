@@ -8,8 +8,8 @@ clean:
 build_ext:
 	python3 setup.py build_ext -i
 
-develop:
+develop: build_ext
 	sudo python3 setup.py develop
 
-test: build_ext
+test: develop
 	pytest -v

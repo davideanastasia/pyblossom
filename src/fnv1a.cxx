@@ -14,9 +14,7 @@ inline uint64_t fnv_pass(uint64_t hval, char octet)
 }
 
 /*
- * perform a 64 bit Fowler/Noll/Vo FNV-1a hash on a buffer
- *
- * @returns	64 bit hash as a static hash type
+ * perform a 64 bit Fowler/Noll/Vo FNV-1a
  */
 uint64_t fnv1a(const char *str)
 {
@@ -34,9 +32,7 @@ uint64_t fnv1a(const char *str)
 }
 
 /*
- * perform a 64 bit Fowler/Noll/Vo FNV-1a hash on a buffer
- *
- * @returns	64 bit hash as a static hash type
+ * perform a 64 bit Fowler/Noll/Vo FNV-1a 
  */
 uint64_t fnv1a(const char *str, char base)
 {
